@@ -17,7 +17,6 @@ router.post('/', createProduct);
 // PUT /api/products/:id — обновить товар по id
 router.put('/:id', updateProduct);
 
-// DELETE /api/products/:id — удалить товар по id
 router.delete('/:id', deleteProduct);
 
 export default router;

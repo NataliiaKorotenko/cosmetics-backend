@@ -34,7 +34,7 @@ export const updateProduct = async (req, res) => {
   }
 };
 
-// DELETE /api/products/:id
+
 export const deleteProduct = async (req, res) => {
   try {
     const deleted = await Product.findByIdAndDelete(req.params.id);

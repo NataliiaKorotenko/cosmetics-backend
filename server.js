@@ -5,31 +5,38 @@ import path from 'path';
 import { fileURLToPath } from 'url';
 
 import connectDB from './config/db.js';
+
+import authRouter from "./routes/auth.js";
 import productRoutes from './routes/productRoutes.js';
+import orderRoutes from './routes/orderRoutes.js';
+import { errorHendler } from './middlewares/errorHendler.js';
 
-// Инициализация переменных окружения
 dotenv.config();
-
-// Подключение к базе данных
 connectDB();
 
 const app = express();
 
-// Мидлвары
 app.use(cors());
 app.use(express.json());
 
-// Роуты
-app.use('/api/products', productRoutes);
+// auth
 
-// Лог запросов (по желанию можно оставить для отладки)
+ app.use("/auth", authRouter);
+
+
+app.use('/api/products', productRoutes);
+app.use('/api/orders', orderRoutes);
+
+// Лог запросов 
 app.use((req, res, next) => {
   console.log(`[${req.method}] ${req.originalUrl}`);
   next();
 });
 
-// Запуск сервера
+
+app.use(errorHendler)
+
 const PORT = process.env.PORT || 5001;
 app.listen(PORT, () => {
-  console.log(`✅ Сервер запущен на http://localhost:${PORT}`);
+  console.log(`✅ Server running on port http://localhost:${PORT}`);
 });
